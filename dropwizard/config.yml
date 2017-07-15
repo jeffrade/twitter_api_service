@@ -14,3 +14,15 @@ database:
   checkConnectionWhileIdle: false
   evictionInterval: 10s
   minIdleTime: 1 minute
+
+logging:
+  appenders:
+    - type: console
+      threshold: DEBUG
+      target: stderr
+    - type: file
+      threshold: INFO
+      currentLogFilename: ./logs/sproutsocial/homework.log
+      archivedLogFilenamePattern: ./logs/sproutsocial/homework-%d.log.gz
+      archivedFileCount: 3
+      timeZone: UTC
