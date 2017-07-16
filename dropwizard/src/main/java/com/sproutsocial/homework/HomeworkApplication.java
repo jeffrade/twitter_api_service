@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.sproutsocial.homework.health.DataSourceFactoryHealthCheck;
 import com.sproutsocial.homework.resources.TimelineResource;
 import com.sproutsocial.homework.resources.TweetResource;
+import com.sproutsocial.homework.db.TwitterAccountDAO;
 
 public class HomeworkApplication extends Application<HomeworkConfiguration> {
 
@@ -35,12 +36,13 @@ public class HomeworkApplication extends Application<HomeworkConfiguration> {
         LOG.info("run: entering...");
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "sqlite");
+        final TwitterAccountDAO twitterAccountDAO = jdbi.onDemand(TwitterAccountDAO.class);
 
         final DataSourceFactoryHealthCheck healthCheck = new DataSourceFactoryHealthCheck(configuration.getDataSourceFactory());
         environment.healthChecks().register("dataSourceFactory-health-check", healthCheck);
 
-        environment.jersey().register(new TimelineResource());
-        environment.jersey().register(new TweetResource());
+        environment.jersey().register(new TimelineResource(twitterAccountDAO));
+        environment.jersey().register(new TweetResource(twitterAccountDAO));
         LOG.info("run: exiting");
     }
 

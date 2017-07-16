@@ -1,6 +1,8 @@
 package com.sproutsocial.homework.resources;
 
 import com.sproutsocial.homework.model.Tweet;
+import com.sproutsocial.homework.model.TwitterAccount;
+import com.sproutsocial.homework.db.TwitterAccountDAO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +27,18 @@ public class TweetResource {
 
   private static final Logger LOG = LoggerFactory.getLogger(TweetResource.class);
 
+  private TwitterAccountDAO twitterAccountDAO;
+
+  public TweetResource(TwitterAccountDAO twitterAccountDAO) {
+    super();
+    this.twitterAccountDAO = twitterAccountDAO;
+  }
+
   /**
   * Posts a new tweet for given twitter account id.
   * @param twitterAccountId String holding Twitter account id
-  * @return a
+  * @param tweet {@code Tweet} object holding the tweet to post
+  * @return a Tweet object that was just posted
   */
   @POST
   @Timed
@@ -36,6 +46,8 @@ public class TweetResource {
       @PathParam("twitterAccountId") final String twitterAccountId,
       @Valid @NotNull final Tweet tweet) {
     LOG.info("postTweet: entering... [twitterAccountId, tweet]=" + twitterAccountId + ", " + tweet.toString());
+    TwitterAccount twitterAccount = twitterAccountDAO.findTwitterAccountByAccountId(twitterAccountId);
+    LOG.info("getTimeline: twitterAccount=" + twitterAccount.toString());
     return tweet;
   }
 
