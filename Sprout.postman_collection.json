@@ -1,0 +1,88 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Sprout",
+		"_postman_id": "9bdbf136-a483-8b4a-2efe-a0f301847b50",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/sprout/v1/twitter/account/2305278770/tweet",
+			"request": {
+				"url": "http://localhost:8080/api/sprout/v1/twitter/account/2305278770/tweet",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"text\": \"Just testing again...\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/api/sprout/v1/twitter/account/2305278770/timeline",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/api/sprout/v1/twitter/account/2305278770/timeline?count=25&since_id=887334237417984002&max_id=887336913627078655",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"sprout",
+						"v1",
+						"twitter",
+						"account",
+						"2305278770",
+						"timeline"
+					],
+					"query": [
+						{
+							"key": "count",
+							"value": "25",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "since_id",
+							"value": "887334237417984002",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "max_id",
+							"value": "887336913627078655",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
