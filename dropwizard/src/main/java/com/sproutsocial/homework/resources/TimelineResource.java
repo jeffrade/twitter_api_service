@@ -17,7 +17,6 @@ import com.codahale.metrics.annotation.Timed;
 
 import java.util.concurrent.TimeUnit;
 import java.io.IOException;
-import java.lang.InterruptedException;
 import java.util.concurrent.ExecutionException;
 import java.util.List;
 
@@ -62,8 +61,13 @@ public class TimelineResource {
       @QueryParam("since_id") final String sinceId,
       @QueryParam("max_id") final String maxId
   ) {
-    LOG.info("getTimeline: entering...");
-    TwitterAccount twitterAccount = twitterAccountDAO.findTwitterAccountByAccountId(twitterAccountId);
+    LOG.debug("entering...");
+    final TwitterAccount twitterAccount = twitterAccountDAO.findTwitterAccountByAccountId(twitterAccountId);
+    if(twitterAccount == null) {
+      LOG.error("Encountered problem looking for account in database");
+      Error errorResponse = new Error(Status.BAD_REQUEST, "account not found");
+      return new Response<Error>(errorResponse);
+    }
     List<Timeline> timelineList = null;
 
     try{

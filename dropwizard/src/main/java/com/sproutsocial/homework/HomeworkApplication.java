@@ -34,7 +34,7 @@ public class HomeworkApplication extends Application<HomeworkConfiguration> {
 
     @Override
     public void run(final HomeworkConfiguration configuration, final Environment environment) {
-        LOG.info("run: entering...");
+        LOG.debug("entering...");
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "sqlite");
         final TwitterAccountDAO twitterAccountDAO = jdbi.onDemand(TwitterAccountDAO.class);
@@ -44,8 +44,8 @@ public class HomeworkApplication extends Application<HomeworkConfiguration> {
         environment.healthChecks().register("dataSourceFactory-health-check", healthCheck);
 
         environment.jersey().register(new TimelineResource(twitterAccountDAO, twitterClient));
-        environment.jersey().register(new TweetResource(twitterAccountDAO));
-        LOG.info("run: exiting");
+        environment.jersey().register(new TweetResource(twitterAccountDAO, twitterClient));
+        LOG.debug("exiting");
     }
 
 }

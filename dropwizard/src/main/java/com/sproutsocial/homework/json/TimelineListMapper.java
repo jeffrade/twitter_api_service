@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.lang.Exception;
 import java.text.ParseException;
 import java.util.List;
 import java.util.ArrayList;
