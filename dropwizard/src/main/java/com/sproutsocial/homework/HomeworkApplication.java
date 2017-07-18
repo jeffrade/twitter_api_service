@@ -32,6 +32,10 @@ public class HomeworkApplication extends Application<HomeworkConfiguration> {
     public void initialize(final Bootstrap<HomeworkConfiguration> bootstrap) {
     }
 
+    /**
+     * If needed to expose outside network, I typically use nginx (with SSL certs) and reverse proxy http://localhost:8080
+     * Then can implement Basic Authorization using http://www.dropwizard.io/0.9.1/docs/manual/auth.html
+     */
     @Override
     public void run(final HomeworkConfiguration configuration, final Environment environment) {
         LOG.debug("entering...");
