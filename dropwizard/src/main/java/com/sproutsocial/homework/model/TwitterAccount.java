@@ -82,7 +82,7 @@ public class TwitterAccount {
 
   /**
   * Create string representation of TwitterAccount for printing
-  * @return
+  * @return returns String representation of this object
   */
   @Override
   public String toString() {

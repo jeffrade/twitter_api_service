@@ -13,6 +13,7 @@ import com.sproutsocial.homework.health.DataSourceFactoryHealthCheck;
 import com.sproutsocial.homework.resources.TimelineResource;
 import com.sproutsocial.homework.resources.TweetResource;
 import com.sproutsocial.homework.db.TwitterAccountDAO;
+import com.sproutsocial.homework.http.TwitterClient;
 
 public class HomeworkApplication extends Application<HomeworkConfiguration> {
 
@@ -37,11 +38,12 @@ public class HomeworkApplication extends Application<HomeworkConfiguration> {
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "sqlite");
         final TwitterAccountDAO twitterAccountDAO = jdbi.onDemand(TwitterAccountDAO.class);
+        final TwitterClient twitterClient = new TwitterClient(configuration.getTwitterConsumerKey(), configuration.getTwitterConsumerSecret());
 
         final DataSourceFactoryHealthCheck healthCheck = new DataSourceFactoryHealthCheck(configuration.getDataSourceFactory());
         environment.healthChecks().register("dataSourceFactory-health-check", healthCheck);
 
-        environment.jersey().register(new TimelineResource(twitterAccountDAO));
+        environment.jersey().register(new TimelineResource(twitterAccountDAO, twitterClient));
         environment.jersey().register(new TweetResource(twitterAccountDAO));
         LOG.info("run: exiting");
     }
